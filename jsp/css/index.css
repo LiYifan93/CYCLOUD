@@ -1,0 +1,139 @@
+        #header {
+            color: gray;
+            font-size: 20px;
+            text-align: center;
+            padding: 2px;
+            cursor: pointer;
+        }
+        /*导航菜单*/
+        a.level3{
+        	padding-left: 90px !important;
+        }
+        
+        a.level4{
+        	padding-left: 108px !important;
+        }
+        
+        a.level5{
+        	padding-left: 126px !important;
+        }
+        
+        a.level6{
+        	padding-left: 144px !important;
+        }
+        a.level7{
+        	padding-left: 162px !important;
+        }
+        a.level8{
+        	padding-left: 180px !important;
+        }
+        .mainbody-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding-top: 52px;
+            width: 230px;
+            height: 100%;
+            background: #292929;
+            z-index: 99;
+            overflow: auto;
+        }
+        
+        .ztree {
+            padding: 0;
+        }
+        
+        .ztree * {
+            font-size: 14px;
+            font-family: "microsoft yahei";
+        }
+        
+        .ztree li a {
+            display: block;
+            padding: 4px 18px;
+            color: #fff;
+            height: 30px
+        }
+        
+        .ztree li a:hover {
+            background: gray;
+            border: 1px gray solid;
+            text-decoration: none;
+        }
+        
+        .ztree span,
+        .ztree li ul.line {
+            background: none;
+        }
+        
+        .ztree li a.curSelectedNode {
+            padding-top: 4px;
+            background-color: #3C8DBC;
+            height: 30px;
+            color: black;
+            border: 1px #000 solid;
+            opacity: 0.8;
+        }
+        
+        .ztree li ul {
+            padding: 0;
+        }
+        
+        .ztree>li>a {
+            padding-left: 36px;
+        }
+        
+        .ztree>li>ul>li>a {
+            padding-left: 54px;
+        }
+        
+        .ztree>li>ul>li>ul>li>a {
+            padding-left: 72px;
+        }
+        
+        .ztree li a span.ico_open,
+        .ztree li a span.ico_close,
+        .ztree li a span.ico_docu {
+            background: none;
+        }
+        
+        .ztree li a span.ico_open::after {
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            border-left: 5px solid white;
+            content: "";
+            margin: 0;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            left: -15px;
+            top: 6px;
+            transform: rotate(90deg);
+        }
+        
+        .ztree li a span.ico_close::after {
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            border-left: 5px solid white;
+            content: "";
+            margin: 0;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            left: -15px;
+            top: 4px;
+            transform: rotate(0deg);
+        }
+        
+        .switch {
+            display: none !important;
+        }
+        /*功能区菜单*/
+
+        @media screen and (max-width: 765px) {
+		    aside {
+		        margin-top:50px;
+		    }
+		}

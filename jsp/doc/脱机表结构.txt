@@ -1,0 +1,372 @@
+CREATE TABLE [black] (  --黑名单表
+	[cp] [varchar] (15) COLLATE Chinese_PRC_CI_AS NOT NULL ,  --车牌
+	[bz] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,
+	CONSTRAINT [PK_black] PRIMARY KEY  CLUSTERED              --备足
+	(
+		[cp]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+
+CREATE TABLE [carinfo] (  --基础信息及在场表aaaa
+	[carname] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--车主姓名
+	[carcp] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,  --车牌
+	[carcw] [varchar] (15) COLLATE Chinese_PRC_CI_AS NULL ,  --车位
+	[cartel] [varchar] (30) COLLATE Chinese_PRC_CI_AS NULL , --电话
+	[caraddr] [varchar] (30) COLLATE Chinese_PRC_CI_AS NULL ,--地址
+	[carlx] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,  --车型
+	[carcolor] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--车颜色
+	[carbz] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,   --车辆备注
+	[carbh] [varchar] (50) COLLATE Chinese_PRC_CI_AS NOT NULL ,--车内部识别编号
+	[carqx1] [bit] NULL , --1通道权限
+	[carqx2] [bit] NULL , --2通道权限
+	[carqx3] [bit] NULL ,
+	[carqx4] [bit] NULL ,
+	[carqx5] [bit] NULL ,
+	[carqx6] [bit] NULL ,
+	[carqx7] [bit] NULL ,
+	[carqx8] [bit] NULL ,
+	[carqx9] [bit] NULL ,
+	[carqx10] [bit] NULL ,
+	[carqx11] [bit] NULL ,
+	[carqx12] [bit] NULL ,
+	[carqx13] [bit] NULL ,
+	[carqx14] [bit] NULL ,
+	[carqx15] [bit] NULL ,
+	[carqx16] [bit] NULL ,
+	[carqx17] [bit] NULL ,
+	[carqx18] [bit] NULL ,
+	[carqx19] [bit] NULL ,
+	[carqx20] [bit] NULL ,
+	[carqx21] [bit] NULL ,
+	[carqx22] [bit] NULL ,
+	[carqx23] [bit] NULL ,
+	[carqx24] [bit] NULL ,
+	[carqx25] [bit] NULL ,
+	[carqx26] [bit] NULL ,
+	[carqx27] [bit] NULL ,
+	[carqx28] [bit] NULL ,
+	[carqx29] [bit] NULL ,
+	[carqx30] [bit] NULL ,
+	[carqx31] [bit] NULL ,
+	[carqx32] [bit] NULL ,
+	[carqx33] [bit] NULL ,
+	[carqx34] [bit] NULL ,
+	[carqx35] [bit] NULL ,
+	[carqx36] [bit] NULL ,
+	[carqx37] [bit] NULL ,
+	[carqx38] [bit] NULL ,
+	[carqx39] [bit] NULL ,
+	[carqx40] [bit] NULL , --40通道权限
+	[carlrsj] [datetime] NULL , --录入时间
+	[caryk] [bit] NULL ,  --包月车标记，1包月车，0临时车
+	[caryksj] [datetime] NULL ,--包月车有效期
+	[inwz] [int] NULL ,--入场位置编号
+	[incp] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL , --入场识别车牌
+	[inpic] [varchar] (40) COLLATE Chinese_PRC_CI_AS NULL , --入场照片
+	[inczy] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--入场操作员
+	[insj] [datetime] NULL ,--入场时间
+	[carzc] [bit] NULL CONSTRAINT [DF_carinfo_carzc] DEFAULT (0),--在场标记，1在场0不在场
+	[carqr] [bit] NULL ,--临时车确认标记 1确认0没有确认
+	[yklssf] [int] NULL CONSTRAINT [DF_carinfo_yklssf] DEFAULT (0),--包月车临时收费标记，1出口收临时费0不收临时费
+	[tjinpic] [varchar] (60) COLLATE Chinese_PRC_CI_AS NULL CONSTRAINT [DF__carinfo__tjinpic__1367E606] DEFAULT (null),--脱机入场照片
+	[cardnm] [varchar] (15) COLLATE Chinese_PRC_CI_AS NULL ,--卡内码
+	CONSTRAINT [PK_carinfo] PRIMARY KEY  CLUSTERED 
+	(
+		[carbh]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+
+CREATE TABLE [cpgx] (  --车牌更新表
+	[gxcp] [varchar] (15) COLLATE Chinese_PRC_CI_AS NOT NULL ,  --更新车牌
+	[yxq] [datetime] NULL , --有效期
+	[zt] [int] NULL , --状态，1未下载0已下载
+	[qx] [int] NOT NULL ,--权限
+	CONSTRAINT [PK_cpgx] PRIMARY KEY  CLUSTERED 
+	(
+		[gxcp],
+		[qx]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+
+CREATE TABLE [eventlog] (--事件表 aaa
+	[id] [int] IDENTITY (1, 1) NOT NULL , --自动编号
+	[usbh] [varchar] (10) COLLATE Chinese_PRC_CI_AS NULL ,--操作员编号
+	[uscz] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,--事件
+	[evtime] [datetime] NULL CONSTRAINT [DF_eventlog_evtime] DEFAULT (getdate()),--时间
+	CONSTRAINT [PK_eventlog] PRIMARY KEY  CLUSTERED 
+	(
+		[id]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+
+CREATE TABLE [gncard] (--功能卡表
+	[cardnm] [varchar] (10) COLLATE Chinese_PRC_CI_AS NOT NULL ,--卡内码
+	[lx] [int] NULL , --类型 20 放行卡，21取消放行卡
+	[bz] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL , --备注
+	CONSTRAINT [PK_gncard] PRIMARY KEY  CLUSTERED 
+	(
+		[cardnm]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+
+CREATE TABLE [iord] (--进出记录表aaaa
+	[aid] [int] IDENTITY (1, 1) NOT NULL ,--自编号
+	[inwz] [int] NULL ,--入场位置编号
+	[incp] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--入场车牌
+	[inpic] [varchar] (40) COLLATE Chinese_PRC_CI_AS NULL ,--入场照片
+	[inczy] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--入场操作员
+	[insj] [datetime] NULL ,--入场时间
+	[outwz] [int] NULL ,--出场位置编号
+	[outcp] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--出场车牌
+	[outpic] [varchar] (40) COLLATE Chinese_PRC_CI_AS NULL ,--出场照片
+	[outczy] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--出场操作员
+	[outsj] [datetime] NULL ,--出场时间
+	[sflxname] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--收费类型
+	[ysje] [money] NULL ,--应收金额
+	[ssje] [money] NULL ,--实收金额
+	[dyqh] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,--备注
+	[jb] [bit] NULL CONSTRAINT [DF_iord_isjb] DEFAULT (0),--交班标记
+	[jbsj] [datetime] NULL ,--交班时间
+	[carbh] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,--车辆编号
+	[tjinpic] [varchar] (60) COLLATE Chinese_PRC_CI_AS NULL CONSTRAINT [DF__iord__tjinpic__173876EA] DEFAULT (null),--脱机入场照片
+	[tjoutpic] [varchar] (60) COLLATE Chinese_PRC_CI_AS NULL CONSTRAINT [DF__iord__tjoutpic__182C9B23] DEFAULT (null),--脱机出场照片
+	[cardnm] [varchar] (15) COLLATE Chinese_PRC_CI_AS NULL --放行卡号码
+) ON [PRIMARY]
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE [sfset] (
+	[sflxbh] [int] NOT NULL ,
+	[free_time] [int] NULL ,
+	[first_time] [int] NULL ,
+	[first_money] [float] NULL ,
+	[next_time] [int] NULL ,
+	[next_money] [float] NULL ,
+	[day_type] [int] NULL ,
+	[max_daymoney] [float] NULL ,
+	[min_money] [float] NULL ,
+	[max_money] [float] NULL ,
+	[overnight] [int] NULL ,
+	[begin_time] [varchar] (10) COLLATE Chinese_PRC_CI_AS NULL ,
+	[end_time] [varchar] (10) COLLATE Chinese_PRC_CI_AS NULL ,
+	[night_money] [float] NULL ,
+	[night_time] [int] NULL ,
+	[month_money] [float] NULL ,
+	[month_count] [int] NULL ,
+	[first_time2] [int] NULL ,
+	[first_money2] [float] NULL ,
+	[next_time2] [int] NULL ,
+	[next_money2] [float] NULL ,
+	[first_time3] [int] NULL ,
+	[first_money3] [float] NULL ,
+	[next_time3] [int] NULL ,
+	[next_money3] [float] NULL ,
+	[tm3] [int] NULL CONSTRAINT [DF__sfset__tm3__25869641] DEFAULT (0),
+	[mm3] [money] NULL CONSTRAINT [DF__sfset__mm3__267ABA7A] DEFAULT (0),
+	[tm4] [int] NULL CONSTRAINT [DF__sfset__tm4__276EDEB3] DEFAULT (0),
+	[mm4] [money] NULL CONSTRAINT [DF__sfset__mm4__286302EC] DEFAULT (0),
+	[tm5] [int] NULL CONSTRAINT [DF__sfset__tm5__29572725] DEFAULT (0),
+	[mm5] [money] NULL CONSTRAINT [DF__sfset__mm5__2A4B4B5E] DEFAULT (0),
+	[tm6] [int] NULL CONSTRAINT [DF__sfset__tm6__2B3F6F97] DEFAULT (0),
+	[mm6] [money] NULL CONSTRAINT [DF__sfset__mm6__2C3393D0] DEFAULT (0),
+	[tm7] [int] NULL CONSTRAINT [DF__sfset__tm7__2D27B809] DEFAULT (0),
+	[mm7] [money] NULL CONSTRAINT [DF__sfset__mm7__2E1BDC42] DEFAULT (0),
+	[tm8] [int] NULL CONSTRAINT [DF__sfset__tm8__2F10007B] DEFAULT (0),
+	[mm8] [money] NULL CONSTRAINT [DF__sfset__mm8__300424B4] DEFAULT (0),
+	[tm9] [int] NULL CONSTRAINT [DF__sfset__tm9__30F848ED] DEFAULT (0),
+	[mm9] [money] NULL CONSTRAINT [DF__sfset__mm9__31EC6D26] DEFAULT (0),
+	[tm10] [int] NULL CONSTRAINT [DF__sfset__tm10__32E0915F] DEFAULT (0),
+	[mm10] [money] NULL CONSTRAINT [DF__sfset__mm10__33D4B598] DEFAULT (0),
+	[tm11] [int] NULL CONSTRAINT [DF__sfset__tm11__34C8D9D1] DEFAULT (0),
+	[mm11] [money] NULL CONSTRAINT [DF__sfset__mm11__35BCFE0A] DEFAULT (0),
+	[tm12] [int] NULL CONSTRAINT [DF__sfset__tm12__36B12243] DEFAULT (0),
+	[mm12] [money] NULL CONSTRAINT [DF__sfset__mm12__37A5467C] DEFAULT (0),
+	[tm13] [int] NULL CONSTRAINT [DF__sfset__tm13__38996AB5] DEFAULT (0),
+	[mm13] [money] NULL CONSTRAINT [DF__sfset__mm13__398D8EEE] DEFAULT (0),
+	[tm14] [int] NULL CONSTRAINT [DF__sfset__tm14__3A81B327] DEFAULT (0),
+	[mm14] [money] NULL CONSTRAINT [DF__sfset__mm14__3B75D760] DEFAULT (0),
+	[tm15] [int] NULL CONSTRAINT [DF__sfset__tm15__3C69FB99] DEFAULT (0),
+	[mm15] [money] NULL CONSTRAINT [DF__sfset__mm15__3D5E1FD2] DEFAULT (0),
+	[tm16] [int] NULL CONSTRAINT [DF__sfset__tm16__3E52440B] DEFAULT (0),
+	[mm16] [money] NULL CONSTRAINT [DF__sfset__mm16__3F466844] DEFAULT (0),
+	[tm17] [int] NULL CONSTRAINT [DF__sfset__tm17__403A8C7D] DEFAULT (0),
+	[mm17] [money] NULL CONSTRAINT [DF__sfset__mm17__412EB0B6] DEFAULT (0),
+	[tm18] [int] NULL CONSTRAINT [DF__sfset__tm18__4222D4EF] DEFAULT (0),
+	[mm18] [money] NULL CONSTRAINT [DF__sfset__mm18__4316F928] DEFAULT (0),
+	[tm19] [int] NULL CONSTRAINT [DF__sfset__tm19__440B1D61] DEFAULT (0),
+	[mm19] [money] NULL CONSTRAINT [DF__sfset__mm19__44FF419A] DEFAULT (0),
+	[tm20] [int] NULL CONSTRAINT [DF__sfset__tm20__45F365D3] DEFAULT (0),
+	[mm20] [money] NULL CONSTRAINT [DF__sfset__mm20__46E78A0C] DEFAULT (0),
+	[tm21] [int] NULL CONSTRAINT [DF__sfset__tm21__47DBAE45] DEFAULT (0),
+	[mm21] [money] NULL CONSTRAINT [DF__sfset__mm21__48CFD27E] DEFAULT (0),
+	[tm22] [int] NULL CONSTRAINT [DF__sfset__tm22__49C3F6B7] DEFAULT (0),
+	[mm22] [money] NULL CONSTRAINT [DF__sfset__mm22__4AB81AF0] DEFAULT (0),
+	[tm23] [int] NULL CONSTRAINT [DF__sfset__tm23__4BAC3F29] DEFAULT (0),
+	[mm23] [money] NULL CONSTRAINT [DF__sfset__mm23__4CA06362] DEFAULT (0),
+	[tm24] [int] NULL CONSTRAINT [DF__sfset__tm24__4D94879B] DEFAULT (0),
+	[mm24] [money] NULL CONSTRAINT [DF__sfset__mm24__4E88ABD4] DEFAULT (0),
+	[lxzt] [int] NULL CONSTRAINT [DF__sfset__lxzt__4F7CD00D] DEFAULT (0),
+	[tm25] [int] NULL CONSTRAINT [DF__sfset__tm25__5070F446] DEFAULT (0),
+	[mm25] [money] NULL CONSTRAINT [DF__sfset__mm25__5165187F] DEFAULT (0),
+	CONSTRAINT [PK_sfset] PRIMARY KEY  CLUSTERED 
+	(
+		[sflxbh]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+GO
+
+
+
+
+
+
+
+CREATE TABLE [monthjf] (--包月车缴费表aaa
+	[aid] [int] IDENTITY (1, 1) NOT NULL ,--自编号
+	[carname] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--车主姓名
+	[carcp] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL , --车牌号码
+	[carbh] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,  --车辆编号
+	[sflxname] [varchar] (30) COLLATE Chinese_PRC_CI_AS NULL ,--收费类型
+	[jfsj] [datetime] NULL ,--缴费时间
+	[ys] [money] NULL ,--应收金额
+	[ss] [money] NULL ,--实收金额
+	[czybh] [varchar] (10) COLLATE Chinese_PRC_CI_AS NULL ,--操作员编号
+	[jb] [bit] NULL CONSTRAINT [DF_monthjf_jb] DEFAULT (0),--交班标记
+	[jbsj] [datetime] NULL ,--交班时间
+	CONSTRAINT [PK_monthjf] PRIMARY KEY  CLUSTERED 
+	(
+		[aid]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+
+CREATE TABLE [opendoor] (--手动开闸表aaa
+	[myaid] [int] IDENTITY (1, 1) NOT NULL ,--自编号
+	[czybh] [varchar] (10) COLLATE Chinese_PRC_CI_AS NULL ,--操作员编号
+	[sj] [datetime] NULL CONSTRAINT [DF_opendoor_sj] DEFAULT (getdate()),--时间
+	[kzwz] [int] NULL ,--位置编号
+	[inpic] [varchar] (40) COLLATE Chinese_PRC_CI_AS NULL ,--照片
+	[jb] [bit] NULL CONSTRAINT [DF__opendoor__jb__145C0A3F] DEFAULT (0),--交班标记
+	[jbsj] [datetime] NULL --交班时间
+) ON [PRIMARY]
+
+
+CREATE TABLE [sflxset] (--收费类型设置
+	[sflxbh] [int] NOT NULL ,--收费类型编号
+	[sflxname] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--收费类型名称
+	[sflxyk] [bit] NULL ,--包月车还是临时车收费1包月0临时
+	CONSTRAINT [PK_sflxset] PRIMARY KEY  CLUSTERED 
+	(
+		[sflxbh]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+
+
+写一个类接收
+CREATE TABLE [sfset] (--收费设置表
+	[sflxbh] [int] NOT NULL ,--收费类型编号
+	[free_time] [int] NULL ,--免费时间
+	[first_time] [int] NULL ,--开始时间 
+	[first_money] [float] NULL ,--开始金额
+	[next_time] [int] NULL ,--布进时间
+	[next_money] [float] NULL ,--布进金额
+	[day_type] [int] NULL ,--日类型
+	[max_daymoney] [float] NULL ,--每天最大收费
+	[min_money] [float] NULL ,--最小收费、总限额
+	[max_money] [float] NULL ,--最大收费
+	[overnight] [int] NULL ,--过夜标记
+	[begin_time] [varchar] (10) COLLATE Chinese_PRC_CI_AS NULL ,--过夜开始时间
+	[end_time] [varchar] (10) COLLATE Chinese_PRC_CI_AS NULL ,--过夜结束时间
+	[night_money] [float] NULL ,--过夜费用
+	[night_time] [int] NULL ,--过夜时间
+
+	[month_money] [float] NULL ,--包月车收费
+	[month_count] [int] NULL ,--包月车月数
+
+	[first_time2] [int] NULL ,--第二段时间
+	[first_money2] [float] NULL ,--第二段金额
+	[next_time2] [int] NULL ,--第三段时间
+	[next_money2] [float] NULL ,--第三段金额
+	[first_time3] [int] NULL ,--第四段时间
+	[first_money3] [float] NULL ,--第四段金额
+	[next_time3] [int] NULL ,--第五段时间
+	[next_money3] [float] NULL ,--第五段金额
+	CONSTRAINT [PK_sfset] PRIMARY KEY  CLUSTERED 
+	(
+		[sflxbh]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+CREATE TABLE [sysinfo] (--某些设置信息
+	[sysname] [varchar] (20) COLLATE Chinese_PRC_CI_AS NOT NULL ,--设置名称
+	[sysvalue] [varchar] (120) COLLATE Chinese_PRC_CI_AS NULL ,--设置状态
+	[sysnote] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,--设置备注
+	CONSTRAINT [PK_sysinfo] PRIMARY KEY  CLUSTERED 
+	(
+		[sysname]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+
+CREATE TABLE [tscpinfo] (--特色车牌表
+	[cpstr] [varchar] (20) COLLATE Chinese_PRC_CI_AS NOT NULL ,--车牌字符
+	[wz] [int] NULL ,--字符位置
+	[bz] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,--备注
+	CONSTRAINT [PK_tscpinfo] PRIMARY KEY  CLUSTERED 
+	(
+		[cpstr]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
+
+
+CREATE TABLE [USinfo] (--用户信息表
+	[aid] [int] IDENTITY (1, 1) NOT NULL ,--自编号
+	[usbh] [varchar] (10) COLLATE Chinese_PRC_CI_AS NOT NULL ,--用户编号
+	[usname] [varchar] (10) COLLATE Chinese_PRC_CI_AS NULL ,--用户姓名
+	[uspass] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--用户密码
+	[uspower] [varchar] (80) COLLATE Chinese_PRC_CI_AS NULL ,--用户权限
+	[usstr1] [varchar] (200) COLLATE Chinese_PRC_CI_AS NULL ,--字段一
+	[usstr2] [varchar] (200) COLLATE Chinese_PRC_CI_AS NULL ,--字段二
+	[usstr3] [varchar] (200) COLLATE Chinese_PRC_CI_AS NULL ,--字段三
+	[pic] [image] NULL CONSTRAINT [DF__usinfo__pic__1273C1CD] DEFAULT (null),--照片
+	[usstr4] [varchar] (200) COLLATE Chinese_PRC_CI_AS NULL ,--字段四
+	[glcard] [varchar] (10) COLLATE Chinese_PRC_CI_AS NULL ,--功能卡号
+	CONSTRAINT [PK_USinfo] PRIMARY KEY  CLUSTERED 
+	(
+		[usbh]
+	)  ON [PRIMARY] 
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+
+CREATE TABLE [xwjset] (--进出口表
+	[xwjbh] [int] NOT NULL ,--通道编号
+	[xwjname] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,--通道名称
+	[xwjip] [varchar] (20) COLLATE Chinese_PRC_CI_AS NULL ,--通道IP
+	[xwjpic] [int] NULL ,--通道对应视频
+	[xwjyk] [int] NULL ,--通道包月车权限
+	[xwjlsk] [int] NULL ,--通道临时车权限
+	[xwjck] [int] NULL ,--通道进出口标记
+	[xwjpic2] [int] NULL ,--后面的没有用到
+	[xwjpicsx] [int] NULL ,
+	[netip1] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,
+	[netip2] [varchar] (50) COLLATE Chinese_PRC_CI_AS NULL ,
+	[sbcount1] [int] NULL ,
+	[sbcount2] [int] NULL ,
+	CONSTRAINT [PK_xwjset] PRIMARY KEY  CLUSTERED 
+	(
+		[xwjbh]
+	)  ON [PRIMARY] 
+) ON [PRIMARY]
